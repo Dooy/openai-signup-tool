@@ -220,6 +220,10 @@ class Signup:
                     logger.warning(f"{email} no credit")
         else:
             logger.warning(f"{email} sess found fail")
+            #修改了没有获取到sess的账号 的保存
+            with open("data/account-ssefail.txt", "a", encoding="utf-8") as f:
+                fcntl.flock(f, fcntl.LOCK_EX)
+                f.write(f"{email}----{password}\n")
 
     def _try_solve_arkose_challenge(self):
         for i in range(3):
