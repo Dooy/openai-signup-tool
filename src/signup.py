@@ -49,10 +49,6 @@ class Signup:
 
 
     def _sign_up(self):
-        with open("data/test.txt", "a", encoding="utf-8") as f:
-            fcntl.flock(f, fcntl.LOCK_EX)
-            f.write(f"mytest\n")
-
         cloudflare_solver.bypass('https://platform.openai.com/signup/', self.driver)
         email_input = WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.ID, "email"))

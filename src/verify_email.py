@@ -54,6 +54,8 @@ def verify_email():
         raise GlobalState.exception
 
     logger.info("start to monitor openai verify email")
+    GlobalState.exception = Interrupted("我测试下这边断掉")
+
 
     def get_html_part(msg):
         if msg.is_multipart():
