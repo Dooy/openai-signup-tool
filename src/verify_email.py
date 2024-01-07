@@ -91,7 +91,7 @@ def verify_email():
                             link = re.search(r'href="(https://mandrillapp.com[^"]+)"', html_content)
                             if link:
                                 link = link.group(1)
-                                logger.info("link", link) 
+                                logger.info(f"link {link}")  #f"{email}----{password}\n"
                                 pm.add_task(lambda: click_verify_link(link))
 
     try:
