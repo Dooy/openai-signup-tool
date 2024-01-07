@@ -32,7 +32,51 @@ class mySign:
     def __init__(self):
         self.driver = utils.get_webdriver()
     def sign_up(self):
-        logger.warning("signup hello")
-        
+        try:
+            func_timeout(5 * 60, self._sign_up)
+        except Interrupted as e:
+            logger.error("error in signup: {}".format(e))
+            raise e
+        except FunctionTimedOut as e:
+            logger.warning("signup timeout")
+            pass
+        except Exception as e:
+            traceback.print_exc()
+        finally:
+            self.driver.quit()
+    
+    def _sign_up(self):
+        cloudflare_solver.bypass('https://chat.oaifree.com/auth/signup', self.driver)
+        email_input = WebDriverWait(self.driver, 30).until(
+            EC.presence_of_element_located((By.ID, "username"))
+        )
+        email = self._get_email()
+        email_input.send_keys(email)
+        print( self.driver.page_source)
+
+        # todo check email
+        #submit_btn = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
+        #submit_btn.click()
+
+        password_input = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.ID, "password"))
+        )
+
+        password = self._get_password()
+        password_input.send_keys(password)
+
+        submit_btn = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
+        submit_btn.click()
+
+        time.sleep(5)
+        exit(0)
+    
+    def _get_email(self):
+        return ''.join(
+            [secrets.choice(string.ascii_letters + string.digits) for _ in range(15)]) + "@" + config['domain']
+
+    def _get_password(self):
+        return ''.join(
+            [secrets.choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(15)])
 
     
