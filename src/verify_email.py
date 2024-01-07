@@ -54,9 +54,6 @@ def verify_email():
         raise GlobalState.exception
 
     logger.info("start to monitor openai verify email")
-    GlobalState.exception = Interrupted("我测试下这边断掉")
-    raise GlobalState.exception
-
 
     def get_html_part(msg):
         if msg.is_multipart():
@@ -94,6 +91,7 @@ def verify_email():
                             link = re.search(r'href="(https://mandrillapp.com[^"]+)"', html_content)
                             if link:
                                 link = link.group(1)
+                                logger.info("link", link) 
                                 pm.add_task(lambda: click_verify_link(link))
 
     try:
