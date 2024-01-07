@@ -55,7 +55,8 @@ COPY src .
 # dumb-init avoids zombie chromium processes
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
-CMD ["python", "main.py"]
+#CMD ["python", "main.py"]
+CMD ["python", "mytest.py"]
 
 # Local build
 # docker build -t ngosang/flaresolverr:3.3.12 .
