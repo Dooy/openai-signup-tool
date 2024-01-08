@@ -52,7 +52,7 @@ class mySign:
         )
         email = self._get_email()
         email_input.send_keys(email)
-        print( self.driver.page_source)
+        #print( self.driver.page_source)
 
         # todo check email
         #submit_btn = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
@@ -64,7 +64,7 @@ class mySign:
 
         password = self._get_password()
         password_input.send_keys(password)
-
+        logger.info(f'${email}----${password}')
         submit_btn = self.driver.find_element(By.XPATH, '//button[@type="submit"]')
         submit_btn.click()
 
@@ -72,6 +72,7 @@ class mySign:
         exit(0)
     
     def _get_email(self):
+        
         return ''.join(
             [secrets.choice(string.ascii_letters + string.digits) for _ in range(15)]) + "@" + config['domain']
 
